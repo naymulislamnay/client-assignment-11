@@ -7,7 +7,7 @@ const MainLayout = () => {
     return (
         <div className="min-h-screen flex flex-col bg-[#FFF5F5]">
             <Navbar></Navbar>
-            <div className={`max-w-[1200px] mx-auto w-full grow`}>
+            <div className={`max-w-300 mx-auto w-full grow`}>
                 <Outlet></Outlet>
             </div>
             <Footer></Footer>
