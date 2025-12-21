@@ -13,7 +13,8 @@ const Navbar = () => {
     const navOptions = (
         <>
             <NavLink to="/" className={navLinkClass}>Home</NavLink>
-            <NavLink to="/donate-now" className={navLinkClass}>Donate Now</NavLink>
+            <NavLink to="/donation-requests" className={navLinkClass}>Donation Requests</NavLink>
+            <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>
         </>
     )
     return (
