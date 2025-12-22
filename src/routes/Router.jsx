@@ -5,6 +5,7 @@ import Homepage from "../pages/Homepage";
 import LogIn from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import DonationRequest from "../pages/DonationRequest";
+import DonationDetails from "../pages/DonationDetails";
 
 
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
             {
                 path: 'donation-requests',
                 element: <DonationRequest></DonationRequest>
+            },
+            {
+                path: 'donation-request/:id',
+                element: <DonationDetails></DonationDetails>
             },
         ]
     },

@@ -1,11 +1,19 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const DonationRequest = () => {
     const [donationRequests, setDonationRequests] = useState([]);
 
+    const statusClasses = {
+        Pending: 'bg-yellow-100 text-yellow-800',
+        Done: 'bg-green-100 text-green-800',
+    };
+
+    const navigate = useNavigate();
+
     useEffect(() => {
-        axios.get('http://localhost:3000/donation-requests')
+        axios.get(`${import.meta.env.VITE_API_URL}/donation-requests`)
             .then(res => setDonationRequests(res.data))
             .catch(err => console.error(err));
     }, []);
@@ -17,7 +25,7 @@ const DonationRequest = () => {
         <div className="max-w-7xl mx-auto mt-10 px-5">
             <div className='flex justify-between items-center mb-5'>
                 <h2 className="text-xl font-semibold text-slate-800">
-                    Pending Blood Requests
+                    Blood Donation Requests
                 </h2>
                 <button className="px-2 md:px-3 lg:px-4 py-1 md:py-2 h-fit rounded-lg bg-[#f05b5b] hover:bg-[#f14343] text-white font-semibold shadow text-[14px] md:text-[16px] hover:cursor-pointer">
                     Create a Donation Request
@@ -36,6 +44,9 @@ const DonationRequest = () => {
                             </th>
                             <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
                                 Blood Group
+                            </th>
+                            <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
+                                Status
                             </th>
                             <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
                                 Donation Date
@@ -64,12 +75,20 @@ const DonationRequest = () => {
                                     {request.bloodGroup}
                                 </td>
 
+                                <td className="px-4 py-4 font-bold">
+                                    <div className={`px-3 py-1 w-fit rounded-full font-semibold text-sm  ${statusClasses[request.donationStatus] || 'bg-blue-100 text-blue-800'}`}>
+                                        {request.donationStatus}
+                                    </div>
+                                </td>
+
                                 <td className="px-4 py-4 text-slate-700">
                                     {request.donationDate}
                                 </td>
 
                                 <td className="px-4 py-4">
-                                    <button className="inline-block px-4 py-1.5 text-sm font-semibold text-[#f14343] border border-[#f14343] rounded-lg hover:bg-[#f14343] hover:text-white transition hover:cursor-pointer">
+                                    <button id={request._id}
+                                        onClick={() => navigate(`/donation-request/${request._id}`)}
+                                        className="inline-block px-4 py-1.5 text-sm font-semibold text-[#f14343] border border-[#f14343] rounded-lg hover:bg-[#f14343] hover:text-white transition hover:cursor-pointer">
                                         View Details
                                     </button>
                                 </td>
