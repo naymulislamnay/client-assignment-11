@@ -1,6 +1,18 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 const DonationRequest = () => {
+    const [donationRequests, setDonationRequests] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/donation-requests')
+            .then(res => setDonationRequests(res.data))
+            .catch(err => console.error(err));
+    }, []);
+
+    console.log(donationRequests)
+
+
     return (
         <div className="max-w-7xl mx-auto mt-10 px-5">
             <div className='flex justify-between items-center mb-5'>
@@ -26,7 +38,7 @@ const DonationRequest = () => {
                                 Blood Group
                             </th>
                             <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
-                                Date
+                                Donation Date
                             </th>
                             <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
                                 Action
@@ -35,58 +47,34 @@ const DonationRequest = () => {
                     </thead>
 
                     <tbody>
-                        <tr className="border-b border-slate-200 hover:bg-slate-50 transition">
-                            <td className="px-4 py-4 text-slate-700">
-                                Rahim
-                            </td>
+                        {donationRequests.map((request) => (
+                            <tr
+                                key={request._id}
+                                className="border-b border-slate-200 hover:bg-slate-50 transition"
+                            >
+                                <td className="px-4 py-4 text-slate-700">
+                                    {request.recipientName}
+                                </td>
 
-                            <td className="px-4 py-4 text-slate-700">
-                                Dhaka, Mirpur
-                            </td>
+                                <td className="px-4 py-4 text-slate-700">
+                                    {request.recipientDistrict}
+                                </td>
 
-                            <td className="px-4 py-4 font-bold text-[#f14343]">
-                                O+
-                            </td>
+                                <td className="px-4 py-4 font-bold text-[#f14343]">
+                                    {request.bloodGroup}
+                                </td>
 
-                            <td className="px-4 py-4 text-slate-700">
-                                12 Jan 2025
-                            </td>
+                                <td className="px-4 py-4 text-slate-700">
+                                    {request.donationDate}
+                                </td>
 
-                            <td className="px-4 py-4">
-                                <button
-                                    className="inline-block px-4 py-1.5 text-sm font-semibold text-[#f14343] border border-[#f14343] rounded-lg hover:bg-[#f14343] hover:text-white hover:cursor-pointer transition"
-                                >
-                                    View Details
-                                </button>
-                            </td>
-                        </tr>
-
-                        {/* second Row */}
-                        <tr className="border-b border-slate-200 hover:bg-slate-50 transition">
-                            <td className="px-4 py-4 text-slate-700">
-                                Rahim
-                            </td>
-
-                            <td className="px-4 py-4 text-slate-700">
-                                Dhaka, Mirpur
-                            </td>
-
-                            <td className="px-4 py-4 font-bold text-[#f14343]">
-                                O+
-                            </td>
-
-                            <td className="px-4 py-4 text-slate-700">
-                                12 Jan 2025
-                            </td>
-
-                            <td className="px-4 py-4">
-                                <button
-                                    className="inline-block px-4 py-1.5 text-sm font-semibold text-[#f14343] border border-[#f14343] rounded-lg hover:bg-[#f14343] hover:text-white hover:cursor-pointer transition"
-                                >
-                                    View Details
-                                </button>
-                            </td>
-                        </tr>
+                                <td className="px-4 py-4">
+                                    <button className="inline-block px-4 py-1.5 text-sm font-semibold text-[#f14343] border border-[#f14343] rounded-lg hover:bg-[#f14343] hover:text-white transition hover:cursor-pointer">
+                                        View Details
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
