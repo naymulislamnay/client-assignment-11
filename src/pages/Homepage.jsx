@@ -1,7 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
+import useAuth from '../hooks/useAuth';
 
 const Homepage = () => {
+    const { user } = useAuth();
+    const navigate = useNavigate();
+
+    const handleJoin = () => {
+        if (user) {
+            navigate('/dashboard/create-request');
+        } else {
+            navigate('/login', {
+                state: '/dashboard/create-request',
+            });
+        }
+    };
+
+
     return (
         <div>
             {/* banner */}
@@ -18,11 +33,9 @@ const Homepage = () => {
                     </p>
 
                     <div className="flex justify-center gap-4">
-                        <Link to='/signup'>
-                            <button className="bg-[#f05b5b] hover:bg-[#f14343] text-white font-semibold px-6 py-3 rounded-lg transition hover:cursor-pointer">
-                                Join as Donor
-                            </button>
-                        </Link>
+                        <button onClick={handleJoin} className="bg-[#f05b5b] hover:bg-[#f14343] text-white font-semibold px-6 py-3 rounded-lg transition hover:cursor-pointer">
+                            Join as Donor
+                        </button>
 
                         {/* <button
                             className="border border-[#f05b5b] text-[#f05b5b] hover:bg-red-50 font-semibold px-6 py-3 rounded-lg transition"

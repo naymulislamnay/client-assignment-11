@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const LogIn = () => {
     const { signIn } = useAuth();
@@ -10,6 +11,7 @@ const LogIn = () => {
     const location = useLocation();
     const from = location.state || '/';
     const [signingIn, setSigningIn] = useState(false);
+    const [show, setShow] = useState(false);
 
     const {
         register,
@@ -52,14 +54,22 @@ const LogIn = () => {
                     )}
 
                     {/* Password */}
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        {...register('password', {
-                            required: 'Password is required',
-                        })}
-                        className="w-full px-3 py-2 border rounded-md"
-                    />
+                    <div className='relative'>
+                        <input
+                            type={show ? "text" : "password"}
+                            placeholder="Password"
+                            {...register('password', {
+                                required: 'Password is required',
+                            })}
+                            className="w-full px-3 py-2 border rounded-md"
+                        />
+                        <span
+                            onClick={() => setShow(!show)}
+                            className="absolute top-3.5 right-4 cursor-pointer z-50"
+                        >
+                            {show ? <FaEye /> : <FaEyeSlash />}
+                        </span>
+                    </div>
                     {errors.password && (
                         <p className="text-red-500 text-sm">{errors.password.message}</p>
                     )}

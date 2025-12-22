@@ -1,24 +1,35 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import useAuth from '../hooks/useAuth';
 
 const DonationRequest = () => {
+    const { user } = useAuth();
+    const navigate = useNavigate();
     const [donationRequests, setDonationRequests] = useState([]);
+
+    const handleCreateRequest = () => {
+        if (user) {
+            navigate('/dashboard/create-request');
+        } else {
+            navigate('/login', {
+                state: '/dashboard/create-request',
+            });
+        }
+    };
+
 
     const statusClasses = {
         Pending: 'bg-yellow-100 text-yellow-800',
         Done: 'bg-green-100 text-green-800',
     };
 
-    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/donation-requests`)
             .then(res => setDonationRequests(res.data))
             .catch(err => console.error(err));
     }, []);
-
-    console.log(donationRequests)
 
 
     return (
@@ -27,7 +38,7 @@ const DonationRequest = () => {
                 <h2 className="text-xl font-semibold text-slate-800">
                     Blood Donation Requests
                 </h2>
-                <button className="px-2 md:px-3 lg:px-4 py-1 md:py-2 h-fit rounded-lg bg-[#f05b5b] hover:bg-[#f14343] text-white font-semibold shadow text-[14px] md:text-[16px] hover:cursor-pointer">
+                <button onClick={handleCreateRequest} className="px-2 md:px-3 lg:px-4 py-1 md:py-2 h-fit rounded-lg bg-[#f05b5b] hover:bg-[#f14343] text-white font-semibold shadow text-[14px] md:text-[16px] hover:cursor-pointer">
                     Create a Donation Request
                 </button>
             </div>

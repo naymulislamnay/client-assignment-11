@@ -5,12 +5,14 @@ import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const SignUp = () => {
     const { createUser, updateUserProfile } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state || '/';
+    const [show, setShow] = useState(false);
 
     const [divisions, setDivisions] = useState([]);
     const [selectedDivisionId, setSelectedDivisionId] = useState('');
@@ -118,14 +120,37 @@ const SignUp = () => {
                     />
                     {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
-                    {/* Password */}
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Minimum 6 characters' } })}
-                        className="w-full px-3 py-2 border rounded-md"
-                    />
-                    {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+
+                    <div className='relative'>
+                        <input
+                            type={show ? "text" : "password"}
+                            placeholder="Password"
+                            {...register('password', {
+                                required: 'Password is required',
+                                minLength: {
+                                    value: 6,
+                                    message: 'Password must be at least 6 characters',
+                                },
+                                pattern: {
+                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/,
+                                    message:
+                                        'Password must contain at least one uppercase letter, one lowercase letter, and one number',
+                                },
+                            })}
+                            className="w-full px-3 py-2 border rounded-md" />
+                        <span
+                            onClick={() => setShow(!show)}
+                            className="absolute top-3.5 right-4 cursor-pointer z-50"
+                        >
+                            {show ? <FaEye /> : <FaEyeSlash />}
+                        </span>
+
+                    </div>
+
+                    {errors.password && (
+                        <p className="text-red-500 text-sm">{errors.password.message}</p>
+                    )}
+
 
                     {/* Blood Group */}
                     <select {...register('bloodGroup', { required: 'Blood group is required' })} className="w-full px-3 py-2 border rounded-md">
