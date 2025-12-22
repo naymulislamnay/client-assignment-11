@@ -1,11 +1,14 @@
 import React from 'react';
 import Logo from './Logo';
 import useAuth from '../hooks/useAuth';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const navigate = useNavigate();
+
+    const profileClick = () => navigate('/dashboard/profile')
 
 
     const navLinkClass = ({ isActive }) => `hover:text-[#f57676] ${isActive ? 'text-[#f57676] underline' : ''}`;
@@ -29,13 +32,13 @@ const Navbar = () => {
                 {user ? (
                     <>
                         <div className="group cursor-pointer flex items-center gap-1.5">
-                            <Link to='/profile'>
+                            <div onClick={profileClick}>
                                 <img
                                     src={user.photoURL || '/default-Profile.png'}
                                     alt={user.displayName} title={user.displayName}
                                     className="w-8 md:w-11 h-8 md:h-11 rounded-full border md:border-2 border-[#f57676] object-cover"
                                 />
-                            </Link>
+                            </div>
 
                             <button
                                 onClick={logOut}

@@ -51,14 +51,14 @@ const Profile = () => {
                     />
                     <div className="flex-1 space-y-2">
                         <h3 className="text-2xl font-semibold">{userData.name}</h3>
-                        <p className="text-gray-500">Email: {userData.email}</p>
-                        <p className="text-gray-500">Role: {userData.role}</p>
-                        <p className="text-gray-500">Blood Group: {userData.bloodGroup}</p>
-                        <p className="text-gray-500">
-                            Location: {userData.upazila}, {userData.district}, {userData.division}
-                        </p>
+                        <p className="text-gray-500">Email: <span className='text-black font-semibold'>{userData.email}</span></p>
+                        <p className="text-gray-500">Role: <span className='text-black font-semibold'>{userData.role}</span></p>
+                        <p className="text-gray-500">Blood Group: <span className='text-black font-semibold'>{userData.bloodGroup}</span></p>
+                        <p className="text-gray-500">Division: <span className='text-black font-semibold'>{userData.division}</span></p>
+                        <p className="text-gray-500">District: <span className='text-black font-semibold'>{userData.district}</span></p>
+                        <p className="text-gray-500">Upazila: <span className='text-black font-semibold'>{userData.upazila}</span></p>
                         <p className="text-gray-400 text-sm">
-                            Joined: {new Date(userData.createdAt).toLocaleDateString()}
+                            Joined: <span className='text-black font-semibold'>{new Date(userData.createdAt).toLocaleDateString()}</span>
                         </p>
                     </div>
                 </div>

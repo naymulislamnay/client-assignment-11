@@ -17,7 +17,7 @@ const useRole = () => {
         },
     });
 
-    return [role, isRoleLoading];
+    return { role, isRoleLoading };
 };
 
 export default useRole;
