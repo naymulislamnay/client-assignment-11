@@ -14,7 +14,7 @@ const Navbar = () => {
         <>
             <NavLink to="/" className={navLinkClass}>Home</NavLink>
             <NavLink to="/donation-requests" className={navLinkClass}>Donation Requests</NavLink>
-            <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>
+            {user && <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>}
         </>
     )
     return (

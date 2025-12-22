@@ -6,6 +6,15 @@ import LogIn from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import DonationRequest from "../pages/DonationRequest";
 import DonationDetails from "../pages/DonationDetails";
+import PrivateRoute from "./PrivateRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Overview from "../pages/Overview";
+import Profile from "../pages/Profile";
+import MyRequests from "../pages/MyRequests";
+import CreateRequest from "../pages/CreateRequest";
+import AllUsers from "../pages/AllUsers";
+import AllRequests from "../pages/AllRequests";
+import Funding from "../pages/Funding";
 
 
 
@@ -25,7 +34,10 @@ const router = createBrowserRouter([
             },
             {
                 path: 'donation-request/:id',
-                element: <DonationDetails></DonationDetails>
+                element:
+                    <PrivateRoute>
+                        <DonationDetails></DonationDetails>
+                    </PrivateRoute>
             },
         ]
     },
@@ -36,6 +48,28 @@ const router = createBrowserRouter([
     {
         path: 'signup',
         element: <SignUp></SignUp>
+    },
+
+    {
+        path: 'dashboard',
+        element: (
+            <PrivateRoute>
+                <DashboardLayout />
+            </PrivateRoute>
+        ),
+        children: [
+            {
+                index: true,  // <-- this will render by default for /dashboard
+                element: <Overview />
+            },
+            { path: 'overview', element: <Overview /> },
+            { path: 'profile', element: <Profile /> },
+            { path: 'my-requests', element: <MyRequests /> },
+            { path: 'create-request', element: <CreateRequest /> },
+            { path: 'all-users', element: <AllUsers /> },       // admin only
+            { path: 'all-requests', element: <AllRequests /> }, // admin only
+            { path: 'funding', element: <Funding /> },          // admin only
+        ],
     },
 
 ])
