@@ -1,10 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import useRole from '../hooks/useRole';
 
 const Overview = () => {
+    const [allDonationRequests, setAllDonationRequests] = useState([]);
     const [donationRequests, setDonationRequests] = useState([]);
     const navigate = useNavigate();
+    const { role } = useRole();
+
+    const viewAll = () => navigate('/dashboard/all-requests')
 
     useEffect(() => {
         axios
@@ -13,22 +18,24 @@ const Overview = () => {
                 const sortedData = res.data
                     .sort(
                         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-                    ).slice(0, 5);
-                setDonationRequests(sortedData);
+                    );
+                setAllDonationRequests(sortedData);
+                setDonationRequests(sortedData.slice(0, 5))
             })
             .catch(err => console.error(err));
     }, []);
 
+
     const statusClasses = {
-        Pending: 'bg-yellow-100 text-yellow-800',
-        Done: 'bg-green-100 text-green-800',
+        pending: 'bg-yellow-100 text-yellow-800',
+        done: 'bg-green-100 text-green-800',
     };
 
     console.log(donationRequests)
 
     return (
         <div>
-            <h2 className="text-2xl font-semibold mb-8">Welcome Back, Admin!</h2>
+            <h2 className="text-2xl font-semibold mb-8">Welcome Back!</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="bg-white p-6 rounded-lg border-l-4 border-red-600 shadow">
@@ -37,7 +44,7 @@ const Overview = () => {
                 </div>
                 <div className="bg-white p-6 rounded-lg border-l-4 border-blue-600 shadow">
                     <h4 className="text-gray-500 text-sm font-medium">Requests</h4>
-                    <h2 className="text-2xl font-bold mt-2">856</h2>
+                    <h2 className="text-2xl font-bold mt-2">{allDonationRequests.length}</h2>
                 </div>
                 <div className="bg-white p-6 rounded-lg border-l-4 border-green-600 shadow">
                     <h4 className="text-gray-500 text-sm font-medium">Funds</h4>
@@ -112,6 +119,14 @@ const Overview = () => {
                         </tbody>
                     </table>
                 </div>
+
+                {(role === 'admin' || role === 'volunteer') && (
+                    <div className='flex justify-center'>
+                        <button onClick={viewAll} className="mt-5 px-2 md:px-3 lg:px-4 py-1 md:py-2 h-fit rounded-lg bg-[#f05b5b] hover:bg-[#f14343] text-white font-semibold shadow text-[14px] md:text-[16px] hover:cursor-pointer mx-auto">
+                            View All
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

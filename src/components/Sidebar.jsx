@@ -6,25 +6,16 @@ import Logo from './Logo';
 const Sidebar = () => {
     const { role } = useRole();
 
-    // Sidebar background color per role
-    const bgColorClass = role === 'admin'
-        ? 'bg-[#360c0c]'
-        : role === 'volunteer'
-            ? 'bg-[#070746]'
-            : 'bg-[#022C0C]';
+    // Sidebar background color
+    const bgColorClass = role === 'admin' ? 'bg-[#360c0c]'
+        : role === 'volunteer' ? 'bg-[#070746]' : 'bg-[#022C0C]';
 
     // Define active and hover colors based on role
-    const activeClass = role === 'admin'
-        ? 'bg-[#4e1a1a] text-[#FFD5D5]'       // darker red + light text
-        : role === 'volunteer'
-            ? 'bg-[#1a1a7a] text-[#C5C5FF]'   // darker blue + light text
-            : 'bg-[#034d1a] text-[#B6FFB6]';   // darker green + light text
+    const activeClass = role === 'admin' ? 'bg-[#4e1a1a] text-[#FFD5D5]'
+        : role === 'volunteer' ? 'bg-[#1a1a7a] text-[#C5C5FF]' : 'bg-[#034d1a] text-[#B6FFB6]';
 
-    const hoverClass = role === 'admin'
-        ? 'hover:bg-[#4e1a1a]'
-        : role === 'volunteer'
-            ? 'hover:bg-[#1a1a7a]'
-            : 'hover:bg-[#034d1a]';
+    const hoverClass = role === 'admin' ? 'hover:bg-[#4e1a1a]'
+        : role === 'volunteer' ? 'hover:bg-[#1a1a7a]' : 'hover:bg-[#034d1a]';
 
     return (
         <aside className={`w-64 ${bgColorClass} text-slate-300 flex flex-col p-6 gap-2 sticky top-0 h-screen`}>

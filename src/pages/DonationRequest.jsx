@@ -20,8 +20,8 @@ const DonationRequest = () => {
 
 
     const statusClasses = {
-        Pending: 'bg-yellow-100 text-yellow-800',
-        Done: 'bg-green-100 text-green-800',
+        pending: 'bg-yellow-100 text-yellow-800',
+        done: 'bg-green-100 text-green-800',
     };
 
 
