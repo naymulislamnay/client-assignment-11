@@ -66,9 +66,9 @@ const router = createBrowserRouter([
             { path: 'profile', element: <Profile /> },
             { path: 'my-requests', element: <MyRequests /> },
             { path: 'create-request', element: <CreateRequest /> },
-            { path: 'all-users', element: <AllUsers /> },       // admin only
-            { path: 'all-requests', element: <AllRequests /> }, // admin only
-            { path: 'funding', element: <Funding /> },          // admin only
+            { path: 'all-users', element: <AllUsers /> },
+            { path: 'all-requests', element: <AllRequests /> },
+            { path: 'funding', element: <Funding /> },
         ],
     },
 

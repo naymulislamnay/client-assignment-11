@@ -29,7 +29,6 @@ const AllUsers = () => {
     //     done: 'bg-green-100 text-green-800',
     // };
 
-    console.log(users)
 
     return (
         <div>

@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router';
 import DropdownMenu from '../components/DropdownMenu';
 // import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import useRole from '../hooks/useRole';
 
 const AllRequests = () => {
     const [donationRequests, setDonationRequests] = useState([]);
     const navigate = useNavigate();
+    const { role } = useRole()
 
     useEffect(() => {
         axios
@@ -122,9 +124,11 @@ const AllRequests = () => {
                                         </button>
                                     </td>
 
-                                    <td className="px-0 py-4 text-slate-700">
-                                        <DropdownMenu request={request} handleDelete={deleteDonationRequest} ></DropdownMenu>
-                                    </td>
+                                    {(role === 'admin') && (
+                                        <td className="px-0 py-4 text-slate-700">
+                                            <DropdownMenu request={request} handleDelete={deleteDonationRequest} ></DropdownMenu>
+                                        </td>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>

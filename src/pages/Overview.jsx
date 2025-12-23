@@ -2,6 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import useRole from '../hooks/useRole';
+import Swal from 'sweetalert2';
+import DropdownMenu from '../components/DropdownMenu';
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const Overview = () => {
     const [allDonationRequests, setAllDonationRequests] = useState([]);
@@ -9,7 +13,28 @@ const Overview = () => {
     const navigate = useNavigate();
     const { role } = useRole();
 
+    const axiosSecure = useAxiosSecure();
+    const { user } = useAuth();
+    const [users, setUsers] = useState([]);
+
+
     const viewAll = () => navigate('/dashboard/all-requests')
+
+    useEffect(() => {
+        if (!user?.email) return;
+
+        axiosSecure.get('/users', {
+            params: {
+                email: user.email
+            }
+        })
+            .then(res => {
+                setUsers(res.data);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }, [user, axiosSecure]);
 
     useEffect(() => {
         axios
@@ -31,7 +56,35 @@ const Overview = () => {
         done: 'bg-green-100 text-green-800',
     };
 
-    console.log(donationRequests)
+    const deleteDonationRequest = async (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to restore this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await axios.delete(`${import.meta.env.VITE_API_URL}/donation-request/${id}`);
+
+                    if (response.data.success) {
+                        // toast.success('Donation request deleted successfully');
+                        setDonationRequests(prev => prev.filter(req => req._id !== id));
+
+                        Swal.fire("Deleted!", "Request has been removed.", "success");
+                    }
+                } catch (error) {
+                    console.error('Failed to delete request:', error);
+                    // toast.error(error.response?.data?.message || 'Failed to delete request');
+                    Swal.fire("Error", "Failed to delete vehicle.", "error");
+                }
+            }
+        })
+    };
+
 
     return (
         <div>
@@ -40,7 +93,7 @@ const Overview = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="bg-white p-6 rounded-lg border-l-4 border-red-600 shadow">
                     <h4 className="text-gray-500 text-sm font-medium">Total Users</h4>
-                    <h2 className="text-2xl font-bold mt-2">1,240</h2>
+                    <h2 className="text-2xl font-bold mt-2">{users.length}</h2>
                 </div>
                 <div className="bg-white p-6 rounded-lg border-l-4 border-blue-600 shadow">
                     <h4 className="text-gray-500 text-sm font-medium">Requests</h4>
@@ -114,6 +167,12 @@ const Overview = () => {
                                             View Details
                                         </button>
                                     </td>
+
+                                    {(role === 'admin') && (
+                                        <td className="px-0 py-4 text-slate-700">
+                                            <DropdownMenu request={request} handleDelete={deleteDonationRequest} ></DropdownMenu>
+                                        </td>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>
