@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import Loader from '../components/Loader';
 
 const Profile = () => {
     const { user } = useAuth();
@@ -23,13 +24,7 @@ const Profile = () => {
         }
     }, [user, axiosSecure]);
 
-    if (loading) {
-        return (
-            <main className="main-content flex justify-center items-center h-screen">
-                <p className="text-gray-500 text-xl">Loading profile...</p>
-            </main>
-        );
-    }
+    if (loading) return <Loader></Loader>;
 
     if (!userData) {
         return (

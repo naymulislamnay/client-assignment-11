@@ -4,6 +4,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import DropdownMenu from '../components/DropdownMenu';
 import { useNavigate } from 'react-router';
+import Loader from '../components/Loader';
 
 const MyRequests = () => {
     const { user } = useAuth();
@@ -65,7 +66,7 @@ const MyRequests = () => {
         })
     };
 
-    if (loading) return <p className="text-center mt-4">Loading your requests...</p>;
+    if (loading) return <Loader></Loader>;
 
     if (!myRequests.length) return <p className="text-center mt-4">No donation requests found.</p>;
 
