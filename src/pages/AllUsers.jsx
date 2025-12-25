@@ -1,105 +1,96 @@
-// import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import RoleDropdown from '../components/RoleDropdown';
+import StatusDropdown from '../components/StatusDropdown';
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+    const fetchUsers = async () => {
         if (!user?.email) return;
 
-        axiosSecure.get('/users', {
-            params: {
-                email: user.email
-            }
-        })
-            .then(res => {
-                setUsers(res.data);
-            })
-            .catch(err => {
-                console.error(err);
+        try {
+            setLoading(true);
+            const res = await axiosSecure.get('/users', {
+                params: { email: user.email }
             });
-    }, [user, axiosSecure]);
+            setUsers(res.data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    // const statusClasses = {
-    //     pending: 'bg-yellow-100 text-yellow-800',
-    //     done: 'bg-green-100 text-green-800',
-    // };
+    useEffect(() => {
+        fetchUsers();
+    }, [user]);
 
+    if (loading) {
+        return <p className="text-center py-10">Loading users...</p>;
+    }
 
     return (
         <div>
             <h2 className="text-2xl font-semibold mb-8">All Users</h2>
 
             <div className="bg-white p-6 rounded-lg shadow">
-                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-x-auto">
+                <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
                         <thead>
-                            <tr className="bg-slate-50 border-b-2 border-slate-200">
-                                <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
-                                    Name
-                                </th>
-                                <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
-                                    Role
-                                </th>
-                                <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
-                                    Email
-                                </th>
-                                <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
-                                    Blood Group
-                                </th>
-                                <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
-                                    Division
-                                </th>
-                                <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
-                                    District
-                                </th>
-                                <th className="px-4 py-4 text-left text-xs font-semibold uppercase text-slate-500">
-                                    Status
-                                </th>
+                            <tr className="bg-slate-50 border-b">
+                                <th className="py-3 text-center text-xs font-semibold uppercase">Name</th>
+                                <th className="py-3 text-center text-xs font-semibold uppercase">Role</th>
+                                <th className="py-3 text-center text-xs font-semibold uppercase">Email</th>
+                                <th className="py-3 text-center text-xs font-semibold uppercase">Blood</th>
+                                <th className="py-3 text-center text-xs font-semibold uppercase">Division</th>
+                                <th className="py-3 text-center text-xs font-semibold uppercase">District</th>
+                                <th className="py-3 text-center text-xs font-semibold uppercase">Status</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             {users.map((u) => (
-                                <tr key={u._id} className="border-b border-slate-200 hover:bg-slate-50 transition">
-                                    <td className="px-4 py-4 text-slate-700">
-                                        {u.name}
+                                <tr
+                                    key={u._id}
+                                    className="border-b hover:bg-slate-50 transition"
+                                >
+                                    <td className="py-3 text-center">{u.name}</td>
+
+                                    <td className="py-3 text-center">
+                                        <RoleDropdown
+                                            user={u}
+                                            refetch={fetchUsers}
+                                        />
                                     </td>
 
-                                    <td className="px-4 py-4 text-slate-700">
-                                        {u.role}
-                                    </td>
+                                    <td className="py-3 text-center">{u.email}</td>
 
-                                    <td className="px-4 py-4 text-slate-700">
-                                        {u.email}
-                                    </td>
-
-                                    <td className="px-4 py-4 font-bold text-[#f14343]">
+                                    <td className="py-3 text-center font-bold text-red-500">
                                         {u.bloodGroup}
                                     </td>
 
-                                    <td className="px-4 py-4 text-slate-700">
-                                        {u.division}
-                                    </td>
+                                    <td className="py-3 text-center">{u.division}</td>
 
-                                    <td className="px-4 py-4 text-slate-700">
-                                        {u.district}
-                                    </td>
+                                    <td className="py-3 text-center">{u.district}</td>
 
-                                    <td className="px-4 py-4">
-                                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${u.status ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                                            {u.status ? 'Active' : 'Blocked'}
-                                        </span>
+                                    <td className="py-3 text-center">
+                                        <StatusDropdown user={u} refetch={fetchUsers} />
                                     </td>
-
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+
+                    {users.length === 0 && (
+                        <p className="text-center py-6 text-gray-500">
+                            No users found
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
