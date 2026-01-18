@@ -45,10 +45,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'donation-request/:id',
-                element:
-                    <PrivateRoute>
-                        <DonationDetails></DonationDetails>
-                    </PrivateRoute>
+                element: <DonationDetails></DonationDetails>
             },
             // Company pages
             {

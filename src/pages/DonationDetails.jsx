@@ -2,10 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import ScrollToTop from '../components/ScrollToTop';
+import useAuth from '../hooks/useAuth';
 
 const DonationDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [donationDetails, setDonationDetails] = useState({});
     const [requester, setRequester] = useState(null);
     const [donor, setDonor] = useState(null);
@@ -88,8 +90,19 @@ const DonationDetails = () => {
     }, [id]);
 
     const handleDonateClick = () => {
-        // Handle donation logic here
-        console.log('User wants to donate');
+        if (!user) {
+            // Redirect to login with return path
+            navigate('/login', {
+                state: {
+                    from: `/donation-request/${id}`,
+                    message: 'Please log in to donate blood and help save a life.'
+                }
+            });
+        } else {
+            // Handle donation logic for logged-in users
+            console.log('User wants to donate');
+            // You can add actual donation logic here
+        }
     };
 
     const handleBackClick = () => {
@@ -302,11 +315,14 @@ const DonationDetails = () => {
                                     >
                                         <span className="flex items-center justify-center">
                                             <span className="text-xl mr-2">❤️</span>
-                                            I Want to Donate
+                                            {user ? 'I Want to Donate' : 'Login to Donate'}
                                         </span>
                                     </button>
                                     <p className="text-xs text-gray-500 text-center">
-                                        By clicking, you'll be connected with the requester to coordinate the donation.
+                                        {user
+                                            ? "By clicking, you'll be connected with the requester to coordinate the donation."
+                                            : "You need to be logged in to donate blood. Click to login or create an account."
+                                        }
                                     </p>
                                 </div>
                             )}
@@ -352,6 +368,35 @@ const DonationDetails = () => {
                                             <span className="text-sm font-semibold">{donor.district}</span>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Public Access Notice */}
+                        {!user && (
+                            <div className="bg-blue-50 rounded-2xl shadow-lg p-6 border border-blue-200">
+                                <div className="flex items-center mb-3">
+                                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                        <span className="text-lg">ℹ️</span>
+                                    </div>
+                                    <h3 className="text-lg font-bold text-blue-800">Public Request</h3>
+                                </div>
+                                <p className="text-sm text-blue-700 mb-3">
+                                    This blood donation request is publicly viewable to help find donors quickly.
+                                </p>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigate('/login')}
+                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+                                    >
+                                        Login
+                                    </button>
+                                    <button
+                                        onClick={() => navigate('/signup')}
+                                        className="flex-1 border border-blue-600 text-blue-600 hover:bg-blue-50 font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+                                    >
+                                        Sign Up
+                                    </button>
                                 </div>
                             </div>
                         )}
