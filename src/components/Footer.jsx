@@ -18,40 +18,40 @@ const Footer = () => {
 
                     <div>
                         <h2 className="text-white text-[15px] font-medium mt-1.5 md:mt-0 mb-0 md:mb-3">Company</h2>
-                        <p className="mt-0 md:mt-2.5">About Us</p>
-                        <p className="mt-0 md:mt-2.5">Our Mission</p>
-                        <p className="mt-0 md:mt-2.5">Contact Us</p>
+                        <Link to="/about" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">About Us</Link>
+                        <Link to="/mission" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Our Mission</Link>
+                        <Link to="/contact" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Contact Us</Link>
+                        <Link to="/team" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Our Team</Link>
                     </div>
 
                     <div>
                         <h2 className="text-white text-[15px] font-medium mt-1.5 md:mt-0 mb-0 md:mb-3">Services</h2>
-                        <p className="mt-0 md:mt-2.5">Services</p>
-                        <p className="mt-0 md:mt-2.5">Stories</p>
-                        <p className="mt-0 md:mt-2.5">Download App</p>
+                        <Link to="/donation-requests" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Find Donors</Link>
+                        <Link to="/dashboard/create-request" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Request Blood</Link>
+                        <Link to="/dashboard/funding" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Emergency Fund</Link>
+                        <Link to="/stories" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Success Stories</Link>
                     </div>
 
                     <div>
                         <h2 className="text-white text-[15px] font-medium mt-1.5 md:mt-0 mb-0 md:mb-3">Information</h2>
-                        <p className="mt-0 md:mt-2.5">Privacy Policy</p>
-                        <p className="mt-0 md:mt-2.5">Terms & Conditions</p>
-                        <p className="mt-0 md:mt-2.5">Join Us</p>
-                    </div>
-
-                    <div>
-                        <h2 className="text-white text-[15px] font-medium mt-1.5 md:mt-0 mb-0 md:mb-3">Social Links</h2>
-                        <p className="mt-0 md:mt-2.5">
-                            @linkedin.BloodBridge.bd
-                        </p>
-                        <p className="mt-0 md:mt-2.5">
-                            @facebook.BloodBridge.bd
-                        </p>
-                        <p className="mt-0 md:mt-2.5">
-                            support@BloodBridge.com
-                        </p>
+                        <Link to="/privacy" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Privacy Policy</Link>
+                        <Link to="/terms" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Terms & Conditions</Link>
+                        <Link to="/signup" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">Join Us</Link>
+                        <Link to="/faq" className="block mt-0 md:mt-2.5 hover:text-white transition-colors">FAQ</Link>
                     </div>
                 </div>
-                <hr className="text-[#5e5e5e] mt-2.5 md:mt-8" />
-                <p className="text-[#A1A1AA] text-center text-[12px] mt-3">© 2025 BloodBridge All rights reserved.</p>
+
+
+
+                <hr className="text-[#5e5e5e] mt-4 md:mt-6" />
+                <div className="flex flex-col md:flex-row justify-between items-center mt-3 text-[12px] text-[#A1A1AA]">
+                    <p>© 2025 BloodBridge. All rights reserved.</p>
+                    <div className="flex gap-4 mt-2 md:mt-0">
+                        <Link to="/sitemap" className="hover:text-white transition-colors">Sitemap</Link>
+                        <Link to="/accessibility" className="hover:text-white transition-colors">Accessibility</Link>
+                        <Link to="/cookies" className="hover:text-white transition-colors">Cookie Policy</Link>
+                    </div>
+                </div>
             </div>
         </div>
     );

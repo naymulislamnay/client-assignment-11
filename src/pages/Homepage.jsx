@@ -1,90 +1,80 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
-import useAuth from '../hooks/useAuth';
+import HeroSection from '../components/HeroSection';
 
 const Homepage = () => {
-    const { user } = useAuth();
-    const navigate = useNavigate();
-
-    const handleJoin = () => {
-        if (user) {
-            navigate('/dashboard/create-request');
-        } else {
-            navigate('/login', {
-                state: '/dashboard/create-request',
-            });
-        }
-    };
-
-
     return (
         <div>
-            {/* banner */}
-            <div className="py-20 text-center bg-white">
-                <div className="max-w-5xl mx-auto">
-                    <h1 className="text-5xl font-extrabold mb-6 text-[#360c0c]">
-                        Donate Blood,
-                        <span className="text-[#f05b5b]"> Save Lives</span>
-                    </h1>
+            {/* Hero Section */}
+            <HeroSection />
 
-                    <p className="text-slate-500 text-lg max-w-2xl mx-auto mb-8">
-                        Your simple act of kindness can give someone a second chance at life.
-                        Join our community today.
+            {/* Featured Section */}
+            <div className="max-w-7xl mx-auto px-5 py-16 bg-white">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+                        Why Choose BloodBridge?
+                    </h2>
+                    <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+                        We're committed to making blood donation simple, safe, and accessible for everyone
                     </p>
-
-                    <div className="flex justify-center gap-4">
-                        <button onClick={handleJoin} className="bg-[#f05b5b] hover:bg-[#f14343] text-white font-semibold px-6 py-3 rounded-lg transition hover:cursor-pointer">
-                            Join as Donor
-                        </button>
-
-                        {/* <button
-                            className="border border-[#f05b5b] text-[#f05b5b] hover:bg-red-50 font-semibold px-6 py-3 rounded-lg transition"
-                        >
-                            Search Donors
-                        </button> */}
-                    </div>
                 </div>
-            </div>
 
-
-            {/* featured Section */}
-            <div className="max-w-7xl mx-auto px-5 py-16">
-                <h2 className="mb-8 text-2xl font-bold text-slate-800">
-                    Featured Section
-                </h2>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-
-                    <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h3 className="text-lg font-semibold text-slate-800 mb-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
+                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-red-200 transition-colors">
+                            <span className="text-2xl">🚨</span>
+                        </div>
+                        <h3 className="text-xl font-semibold text-slate-800 mb-3">
                             Emergency Help
                         </h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
-                            Instant connection with local donors during emergencies.
+                        <p className="text-slate-600 leading-relaxed">
+                            Instant connection with local donors during emergencies. Our 24/7 support ensures help is always available when you need it most.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h3 className="text-lg font-semibold text-slate-800 mb-2">
+                    <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
+                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-red-200 transition-colors">
+                            <span className="text-2xl">🆓</span>
+                        </div>
+                        <h3 className="text-xl font-semibold text-slate-800 mb-3">
                             Free Registration
                         </h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
-                            Donors can register for free and manage their profile easily.
+                        <p className="text-slate-600 leading-relaxed">
+                            Donors can register for free and manage their profile easily. No hidden fees, no subscriptions - just a commitment to saving lives.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h3 className="text-lg font-semibold text-slate-800 mb-2">
-                            Secure Data
+                    <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
+                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-red-200 transition-colors">
+                            <span className="text-2xl">🔒</span>
+                        </div>
+                        <h3 className="text-xl font-semibold text-slate-800 mb-3">
+                            Secure & Private
                         </h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
-                            Your information is safe with our encrypted cloud storage.
+                        <p className="text-slate-600 leading-relaxed">
+                            Your information is safe with our encrypted cloud storage and strict privacy policies. We protect your data like we protect lives.
                         </p>
                     </div>
+                </div>
 
+                {/* Call to Action Section */}
+                <div className="mt-16 text-center bg-linear-to-r from-red-50 to-red-100 rounded-2xl p-8 md:p-12">
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
+                        Ready to Make a Difference?
+                    </h3>
+                    <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
+                        Join thousands of heroes who are already saving lives through blood donation.
+                        Your contribution can be the difference between life and death.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105">
+                            Become a Donor Today
+                        </button>
+                        <button className="border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300">
+                            Learn More About Donation
+                        </button>
+                    </div>
                 </div>
             </div>
-
         </div>
     );
 };

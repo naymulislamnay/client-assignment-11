@@ -15,6 +15,17 @@ import CreateRequest from "../pages/CreateRequest";
 import AllUsers from "../pages/AllUsers";
 import AllRequests from "../pages/AllRequests";
 import Funding from "../pages/Funding";
+import About from "../pages/About";
+import Mission from "../pages/Mission";
+import Contact from "../pages/Contact";
+import Team from "../pages/Team";
+import Stories from "../pages/Stories";
+import Privacy from "../pages/Privacy";
+import Terms from "../pages/Terms";
+import FAQ from "../pages/FAQ";
+import Sitemap from "../pages/Sitemap";
+import Accessibility from "../pages/Accessibility";
+import Cookies from "../pages/Cookies";
 
 
 
@@ -39,6 +50,53 @@ const router = createBrowserRouter([
                         <DonationDetails></DonationDetails>
                     </PrivateRoute>
             },
+            // Company pages
+            {
+                path: 'about',
+                element: <About></About>
+            },
+            {
+                path: 'mission',
+                element: <Mission></Mission>
+            },
+            {
+                path: 'contact',
+                element: <Contact></Contact>
+            },
+            {
+                path: 'team',
+                element: <Team></Team>
+            },
+            // Service pages
+            {
+                path: 'stories',
+                element: <Stories></Stories>
+            },
+            // Legal pages
+            {
+                path: 'privacy',
+                element: <Privacy></Privacy>
+            },
+            {
+                path: 'terms',
+                element: <Terms></Terms>
+            },
+            {
+                path: 'faq',
+                element: <FAQ></FAQ>
+            },
+            {
+                path: 'sitemap',
+                element: <Sitemap></Sitemap>
+            },
+            {
+                path: 'accessibility',
+                element: <Accessibility></Accessibility>
+            },
+            {
+                path: 'cookies',
+                element: <Cookies></Cookies>
+            }
         ]
     },
     {
